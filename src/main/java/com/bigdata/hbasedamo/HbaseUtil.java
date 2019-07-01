@@ -12,9 +12,9 @@ import java.io.IOException;
  * @date 2019/6/13
  */
 public class HbaseUtil {
-    public static Configuration conf;
+    private static Configuration conf;
     private static Connection connection;
-    private static HBaseAdmin admin;
+    private static Admin admin;
     static{
         //使用HBaseConfiguration的单例方法实例化
         conf = HBaseConfiguration.create();
@@ -23,7 +23,7 @@ public class HbaseUtil {
 
         try {
             connection = ConnectionFactory.createConnection(conf);
-            admin = (HBaseAdmin) connection.getAdmin();
+            admin = connection.getAdmin();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class HbaseUtil {
      */
     public static boolean isTableExist(String tableName) throws IOException {
         //在HBase中管理、访问表需要先创建HBaseAdmin对象
-        Connection connection = ConnectionFactory.createConnection(conf);
+//        Connection connection = ConnectionFactory.createConnection(conf);
 //        HBaseAdmin admin = new HBaseAdmin(conf);
         boolean b = admin.tableExists(TableName.valueOf(tableName));
         return b;
